@@ -22,7 +22,7 @@ urlpatterns = [
     path('contact/', views.contact,name="ContactUs"),
     path('tracker/', views.tracker,name="TrackingSatus"),
     path('search/', views.search,name="Search"),
-    path('productview/', views.productView,name="Search"),
+    path('prodView/<int:myid>', views.productView,name="prodView"),
     path('checkout/', views.checkout,name="Checkout"),
 
 ]
