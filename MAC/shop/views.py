@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from . models import product,Contact
+from . models import product,Contact,Orders
 import math
 Products= product.objects.all()
 print(Products)
@@ -46,4 +46,20 @@ def productView(request,myid):
     Product = product.objects.filter(id=myid)
     return render(request,'shop/prodView.html',{'product':Product[0]})
 def checkout(request):
+    if request.method=='POST':
+
+        name= request.POST.get('name','')
+        email = request.POST.get('email','')
+        phone = request.POST.get('phone','')
+        city= request.POST.get('city','')
+        state= request.POST.get('state','')
+        zip_code= request.POST.get('zip_code','')
+        address= request.POST.get('address1','')+request.POST.get('address2','')
+        items_json=request.POST.get('itemsjson','')
+        order=Orders(name=name,email=email,phone=phone,city=city,state=state,zip_code=zip_code,address=address,
+                     items_json=items_json)
+        order.save()
+        id=order.order_id
+        thank = True
+        return render(request,'shop/checkout.html',{'thank':thank,'id':id})
     return render(request,'shop/checkout.html')
