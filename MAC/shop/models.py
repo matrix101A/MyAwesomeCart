@@ -36,8 +36,15 @@ class Orders(models.Model):
     phone=models.IntegerField(max_length=15)
     city=models.CharField(max_length=50)
 
+class OrderUpdate(models.Model):
+    update_id=models.AutoField(primary_key=True)
+    order_id=models.IntegerField(default="")
+    update_desc=models.CharField(max_length=5000)
+    timestamp=models.DateField(auto_now_add=True)
+
+
     def __str__(self):
-         return self.order_id
+        return self.update_desc[0:7]+"..."
 
 
 

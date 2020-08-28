@@ -1,5 +1,71 @@
 {% extends 'shop/basic.html' %}
 
-{%block titel%}Title of about{%endblock%}
+{%block title%}Checkout{%endblock%}
 
-{block body}<h1>HELLO HOW ARE YOU</h1>{endblock body}
+{% block body %}
+<div class="container">
+	<div class="col my-4">
+	<h2>My Awesome Cart Express Tracker-Enter your Order Id to track Your Orders</h2>
+
+
+</div>
+
+
+  <div>
+		<form method="post" action="" id="TrackerForm"> {% csrf_token %}
+  <div class="form-row">
+  	<div class="form-group col-md-6">
+      <label for="OrderId">Order Id</label>
+      <input type="name" class="form-control" id="OrderId" name="OrderId">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email">
+    </div>
+
+  </div>
+  <button type="submit" class="btn btn-primary">Track Order</button>
+</form>
+
+	</div>
+
+
+
+<div class="col my-4">
+<h2>Your Order Status</h2>
+<div>
+	<ul class="list-group " id="items" >
+  <!-- we will add items here -->
+
+</ul>
+</div>
+
+</div>
+
+</div>
+{% endblock body %}
+{% block js %}
+ <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+$('#TrackerForm').submit(function(event){
+  event.preventDefault();
+$('#items').empty();
+var formData={
+    'orderId': $('input[name=OrderId]').val(),
+    'email': $('input[name=email]').val(),
+    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+};
+$.ajax({
+    type:'POST',
+    url:'/shop/tracker/',
+    data:formData,
+    encode:true
+    })
+    .done(function(data){
+        console.log(data)
+    });
+
+
+});
+</script>
+{% endblock %}

@@ -1,16 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from . models import product,Contact,Orders
-import math
+from . models import product,Contact,Orders,OrderUpdate
+import math,json
 Products= product.objects.all()
-print(Products)
+
 
 def index(request):
-
-    #n=len(Products)
-    #nSlides=int(n/4+math.ceil(n/4-n//4))
-
-    #allProds=[[Products,range(1,nSlides),nSlides],[Products,range(1,nSlides),nSlides]]
     allProds=[]
     catprods=product.objects.values('category','id')
     cats={item['category'] for item in catprods} #Gets all categories
@@ -33,10 +28,30 @@ def contact(request):
         desc= request.POST.get('desc','')
         contact=Contact(name=name,email=email,phone=phone,desc=desc)
         contact.save()
+
     return render(request, 'shop/contact.html')
 
 def tracker(request):
-    return render(request,'shop/tracker.html')
+
+    if request.method == 'POST':
+        OrderId = request.POST.get('OrderId', '')
+        email = request.POST.get('email', '')
+        print(f"{OrderId} and {email}")
+        try:
+            order=Orders.objects.filter(order_id=OrderId,email=email)
+            if len(order)>0:
+                update=OrderUpdate.objects.filter(order_id=OrderId)
+                updates=[]
+                for item in update:
+                    updates.append({'text':item.update_desc,'time':item.timestamp})
+                    response= json.dumps(updates,default=str)
+                    return  HttpResponse(response)
+            else :
+                return  HttpResponse('else')
+        except Exception as e:
+            return  HttpResponse('exception')
+    return render(request, 'shop/tracker.html')
+
 
 def search(request):
     return render(request,'shop/search.html')
@@ -45,9 +60,9 @@ def productView(request,myid):
     #fetch product using id
     Product = product.objects.filter(id=myid)
     return render(request,'shop/prodView.html',{'product':Product[0]})
+
 def checkout(request):
     if request.method=='POST':
-
         name= request.POST.get('name','')
         email = request.POST.get('email','')
         phone = request.POST.get('phone','')
@@ -59,6 +74,8 @@ def checkout(request):
         order=Orders(name=name,email=email,phone=phone,city=city,state=state,zip_code=zip_code,address=address,
                      items_json=items_json)
         order.save()
+        update=OrderUpdate(order_id=order.order_id,update_desc="Your order has been placed !")
+        update.save()
         id=order.order_id
         thank = True
         return render(request,'shop/checkout.html',{'thank':thank,'id':id})
