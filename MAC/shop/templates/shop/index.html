@@ -62,10 +62,12 @@
     {% for pro, range, nSlides in allProds %}
 
 
-    <h2 style="font-size: 21px!important;">{{pro.0.category}}</h3>
-     <div class="row my-3" style="background-color: white;padding:1px">
 
-<div id="demo{{forloop.counter}}" class=" col carousel slide my-3" data-ride="carousel">
+     <div class="row my-3" style="background-color: white;padding:3px;border-radius:2%">
+         <div class="col-md-12 mx-4 my-2">
+        <h2 style="font-size: 21px!important;">{{pro.0.category}}-Featured Products !</h3>
+            </div>
+<div id="demo{{forloop.counter}}" class=" row carousel slide my-3" data-ride="carousel">
     <ul class="carousel-indicators">
       <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
         {% for i in range %}
