@@ -11,7 +11,13 @@
 	<ul class="list-group " id="items" >
   <!-- we will add items here -->
 
-</ul>	
+</ul>
+        <nav aria-label="breadcrumb">
+  <ol class="breadcrumb mt-3">
+    <li class="breadcrumb-item active" aria-current="page">Your total is RS:<span id="totalPrice"></span> .Thank you
+    for shopping with us !</li>
+  </ol>
+</nav>
 </div>
 </div>
 
@@ -81,15 +87,17 @@
     }
     var mystr="";
     var sum=0;
+    totalPrice=0;
     if($.isEmptyObject(cart)){
     	mystr="Your Cart is empty, please add some items before checkout";
     }
     else{
     for(item in cart){
-
+        itemPrice=cart[item][2]
     	let name=cart[item][1];
     	let qty=cart[item][0];
     	sum=sum+qty;
+    	totalPrice=totalPrice+(qty*itemPrice)
 
     	mystr=mystr+`<li class="list-group-item d-flex justify-content-between align-items-center">
     ${name}
@@ -98,6 +106,7 @@
 }
 }
 	document.getElementById('cart').innerHTML=sum;
+	document.getElementById('totalPrice').innerHTML=totalPrice;
 
   	$('#items').append(mystr)
     

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from . models import product,Contact,Orders,OrderUpdate
 import math,json
+from datetime import  datetime
 Products= product.objects.all()
 
 
@@ -36,20 +37,19 @@ def tracker(request):
     if request.method == 'POST':
         OrderId = request.POST.get('OrderId', '')
         email = request.POST.get('email', '')
-        print(f"{OrderId} and {email}")
         try:
             order=Orders.objects.filter(order_id=OrderId,email=email)
             if len(order)>0:
                 update=OrderUpdate.objects.filter(order_id=OrderId)
                 updates=[]
                 for item in update:
-                    updates.append({'text':item.update_desc,'time':item.timestamp})
-                    response= json.dumps(updates,default=str)
-                    return  HttpResponse(response)
+                     updates.append({'text':item.update_desc,'time':item.timestamp})
+                     response= json.dumps([updates,order[0].items_json],default=str)
+                return HttpResponse(response)
             else :
-                return  HttpResponse('else')
+                return  HttpResponse('{}')
         except Exception as e:
-            return  HttpResponse('exception')
+            return  HttpResponse('{}')
     return render(request, 'shop/tracker.html')
 
 
