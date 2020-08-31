@@ -4,16 +4,19 @@
 <div class="row mt-4">
     <div class="col-md-8 blog-main">
       <h3 class="pb-4 mb-4 font-italic border-bottom">
-        Title
+        {{post.title}}
       </h3>
 
+
       <div class="blog-post">
-        <h2 class="blog-post-title">Heading 0</h2>
-        Heading-0 content
-          <h2>Heading 1</h2>
-        Heading-1 content
-          <h3>Heading-2</h3>
-        Heading-2
+        <h2 class="blog-post-title my-2">{{post.head0}}</h2>
+         <p class="blog-post-meta">January 1, 2014 by <a href="#">Abhinav</a></p>
+        {{post.chead0}}
+        <hr>
+          <h2 class="my-2">{{post.head1}}</h2>
+        {{post.chead1}}
+          <h3 class="my-2">{{post.head2}}</h3>
+       {{post.chead2}}
           content </div><!-- /.blog-post -->
 
 
