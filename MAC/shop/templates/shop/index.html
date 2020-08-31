@@ -57,6 +57,20 @@
 
 {% block body %}
 {% load static %}
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src='{% static "shop/a.jpg" %}' height="300px" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src='{% static "shop/background1.jpg" %}' height="300px" class="d-block w-100" alt="...">
+    </div>
+       <div class="carousel-item">
+      <img src='{% static "shop/samsung.jpg" %}' height="300px" class="d-block w-100" alt="...">
+    </div>
+
+  </div>
+</div>
 <div class="container">
 
     {% for pro, range, nSlides in allProds %}
@@ -90,13 +104,13 @@
             <div class="card-body">
               <h6 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h6>
               <p class="card-text">{{i.desc|slice:":50"}} ...</p>
-                <h6 class="card-text" >Price:Rs-<span id="pricepr{{i.id}}">{{i.price}}</span></h6>
+                <h6 class="card-text" >Rs. <span id="pricepr{{i.id}}">{{i.price}}</span></h6>
               <span id="divpr{{i.id}}" class="divpr">
               <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
                 <a href="/shop/prodView/{{i.id}}">
                   </span>
                 <button id="qv{{i.id}}"class="btn btn-primary cart">Quick View</button></a>
-                
+
 
             </div>
           </div>
