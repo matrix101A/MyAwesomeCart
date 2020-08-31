@@ -1,5 +1,14 @@
-{% extends 'shop/basic.html' %}
+{% extends 'blog/basic.html' %}
+{% block css %}
+.fb-like{
+margin-top:30px;
+}
+.fb-comments{
+margin-top:20px;
+}
+{% endblock %}
 {% block body %}
+
 <div class="container mt-3">
 <div class="row mt-4">
     <div class="col-md-8 blog-main">
@@ -10,14 +19,18 @@
 
       <div class="blog-post">
         <h2 class="blog-post-title my-2">{{post.head0}}</h2>
-         <p class="blog-post-meta">January 1, 2014 by <a href="#">Abhinav</a></p>
+         <p class="blog-post-meta">{{post.pub_date}} by <a href="#">Abhinav</a></p>
         {{post.chead0}}
         <hr>
           <h2 class="my-2">{{post.head1}}</h2>
         {{post.chead1}}
-          <h3 class="my-2">{{post.head2}}</h3>
-       {{post.chead2}}
+          <h3 class="my-10">{{post.head2}}</h3>
+         {{post.chead2}}
           content </div><!-- /.blog-post -->
+
+        <div class="fb-like" data-href="http://localhost:8000/blog/blogpost/4" data-width="" data-layout="standard" data-action="like" data-size="large" data-share="true"></div>
+
+        <div class="fb-comments" data-href="http://localhost:8000/blog/blogpost/{{post.post_id}}" data-numposts="5" ></div>
 
 
     </div><!-- /.blog-main -->
